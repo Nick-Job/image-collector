@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>图片收集器</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      width: 300px; margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased; background: #fff; color: #1a1a1a;
+    }
+    .wrap { padding: 16px 16px 14px; }
+    h1 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 12px; }
+    .row {
+      font-size: 12.5px; color: #444; background: #fff; border: 1px solid #f0f0f0;
+      border-radius: 12px; padding: 9px 12px; margin-bottom: 8px;
+    }
+    .row .label { color: #999; font-size: 11px; display: block; margin-bottom: 2px; }
+    button {
+      display: block; width: 100%; margin-bottom: 8px; padding: 10px; border: 1px solid #e5e5e5;
+      border-radius: 12px; font-size: 13.5px; cursor: pointer; background: #fff; color: #1a1a1a;
+      transition: background .15s ease; font-family: inherit; -webkit-font-smoothing: antialiased;
+    }
+    button:hover { background: #f7f7f7; }
+    button.primary { background: #1a1a1a; color: #fff; font-weight: 600; border: none; }
+    button.primary:hover { background: #333; }
+    .msg { font-size: 12px; color: #c53d43; margin-top: 6px; min-height: 16px; }
+    .msg.ok { color: #1f7a3d; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #1c1c1c; color: #f5f5f5; }
+      .row { background: #242424; border-color: #333; color: #ccc; }
+      .row .label { color: #666; }
+      button { background: #242424; color: #f5f5f5; border-color: #333; }
+      button:hover { background: #2e2e2e; }
+      button.primary { background: #f5f5f5; color: #1a1a1a; }
+      button.primary:hover { background: #fff; }
+      .msg { color: #e36c71; }
+      .msg.ok { color: #3d9a5f; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>📷 图片收集器</h1>
+    <div class="row"><span class="label">当前站点</span><span id="site">检测中…</span></div>
+    <div class="row"><span class="label">GitHub 图库</span><span id="gh">—</span></div>
+    <button id="btnScan">🔍 扫描当前页图片（任意网站通用）</button>
+    <button id="btnPanel">🧰 打开采集面板</button>
+    <button class="primary" id="btnOptions">⚙️ 设置（GitHub / 下载）</button>
+    <div class="msg" id="msg"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

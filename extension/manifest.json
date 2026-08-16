@@ -1,0 +1,127 @@
+{
+  "manifest_version": 3,
+  "name": "图片收集器 · 无水印素材采集",
+  "version": "1.0.0",
+  "description": "采集 Pinterest / 花瓣等网站图片，提取豆包 / 即梦无水印原图；一键下载到本地或推送到 GitHub 图库（支持 jsDelivr CDN 链接）",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "downloads",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "图片收集器",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.pinterest.com/*",
+        "https://*.pinterest.co.uk/*",
+        "https://*.pinterest.de/*",
+        "https://*.pinterest.fr/*",
+        "https://*.pinterest.jp/*",
+        "https://*.pinterest.ca/*",
+        "https://*.pinterest.com.au/*",
+        "https://*.pinterest.es/*",
+        "https://*.pinterest.it/*",
+        "https://*.pinterest.in/*",
+        "https://*.pinterest.com.br/*",
+        "https://*.pinterest.co.kr/*",
+        "https://*.pinterest.pt/*",
+        "https://*.pinterest.se/*",
+        "https://*.pinterest.ch/*"
+      ],
+      "js": [
+        "content/normalize.js",
+        "content/collector-ui.js",
+        "content/pinterest-huaban.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://huaban.com/*",
+        "https://*.huaban.com/*"
+      ],
+      "js": [
+        "content/normalize.js",
+        "content/collector-ui.js",
+        "content/pinterest-huaban.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.doubao.com/*",
+        "https://*.doubao.com/*"
+      ],
+      "js": [
+        "content/doubao-extract.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.doubao.com/*",
+        "https://*.doubao.com/*"
+      ],
+      "js": [
+        "content/collector-ui.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://jimeng.jianying.com/*"
+      ],
+      "js": [
+        "content/jimeng-extract.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://jimeng.jianying.com/*"
+      ],
+      "js": [
+        "content/collector-ui.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content/normalize.js",
+        "content/collector-ui.js",
+        "content/fab-everywhere.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

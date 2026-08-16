@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>图片收集器 · 设置</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased; background: #fff; color: #1a1a1a;
+    }
+    .page { max-width: 640px; margin: 0 auto; padding: 32px 20px 60px; }
+    h1 { font-size: 23px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 6px; }
+    .desc { font-size: 13px; color: #8a8a8a; margin-bottom: 24px; line-height: 1.7; }
+    .card {
+      background: #fff; border: 1px solid #f0f0f0; border-radius: 16px;
+      padding: 20px; margin-bottom: 16px;
+    }
+    .card h2 { font-size: 14px; font-weight: 600; margin: 0 0 16px; color: #1a1a1a; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 12.5px; color: #444; margin-bottom: 5px; }
+    .field input, .field select {
+      width: 100%; padding: 8px 11px; border: 1px solid #e0e0e0; border-radius: 9px;
+      font-size: 13.5px; box-sizing: border-box; background: #fff; color: #1a1a1a;
+      outline: none; font-family: inherit; transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .field input:focus, .field select:focus {
+      border-color: #1a1a1a; box-shadow: 0 0 0 3px rgba(0,0,0,.08);
+    }
+    .field .tip { font-size: 11.5px; color: #999; margin-top: 4px; line-height: 1.6; }
+    .check { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #444; margin-bottom: 12px; }
+    .check input { width: 18px; height: 18px; accent-color: #1a1a1a; }
+    .actions { display: flex; gap: 10px; margin-top: 8px; }
+    .actions button {
+      flex: 1; padding: 11px; border: none; border-radius: 11px; font-size: 14px; cursor: pointer;
+      font-family: inherit; -webkit-font-smoothing: antialiased;
+    }
+    .btn-save { background: #1a1a1a; color: #fff; font-weight: 600; }
+    .btn-save:hover { background: #333; }
+    .btn-test { background: #fff; color: #1a1a1a; border: 1px solid #e0e0e0 !important; font-weight: 500 !important; }
+    .btn-test:hover { background: #f7f7f7; }
+    .status { font-size: 12.5px; margin-top: 10px; min-height: 18px; color: #8a8a8a; }
+    .status.ok { color: #1f7a3d; }
+    .status.err { color: #c53d43; }
+    a { color: #333; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #000; color: #f5f5f5; }
+      .desc { color: #8c8c8c; }
+      .card { background: #1c1c1c; border-color: #2e2e2e; }
+      .card h2 { color: #f5f5f5; }
+      .field label { color: #ccc; }
+      .field input, .field select { background: #242424; border-color: #3a3a3a; color: #f5f5f5; }
+      .field input:focus, .field select:focus { border-color: #f5f5f5; box-shadow: 0 0 0 3px rgba(255,255,255,.12); }
+      .field .tip { color: #666; }
+      .check { color: #ccc; }
+      .check input { accent-color: #f5f5f5; }
+      .btn-save { background: #f5f5f5; color: #1a1a1a; }
+      .btn-save:hover { background: #fff; }
+      .btn-test { background: #242424; color: #f5f5f5; border-color: #3a3a3a !important; }
+      .btn-test:hover { background: #2e2e2e; }
+      .status { color: #8c8c8c; }
+      .status.ok { color: #3d9a5f; }
+      .status.err { color: #e36c71; }
+      a { color: #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>⚙️ 图片收集器 · 设置</h1>
+    <div class="desc">
+      配置 GitHub 图库后可一键把采集的图片推送到仓库（参考 PicList / boomb 的存图方案），
+      推送后可直接复制 jsDelivr CDN 链接用于 Markdown / 网页。
+    </div>
+
+    <div class="card">
+      <h2>GitHub 图库</h2>
+      <div class="field">
+        <label>Personal Access Token（只存在本机浏览器中）</label>
+        <input type="password" id="token" placeholder="github_pat_xxxx 或 ghp_xxxx" autocomplete="off">
+        <div class="tip">
+          创建方法：GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens
+          → 勾选仓库的 <b>Contents: Read and write</b> 权限。
+        </div>
+      </div>
+      <div class="field">
+        <label>仓库（owner/repo）</label>
+        <input type="text" id="repo" placeholder="例如：yourname/image-collection">
+      </div>
+      <div class="field">
+        <label>分支</label>
+        <input type="text" id="branch" placeholder="main">
+      </div>
+      <div class="field">
+        <label>仓库内根目录</label>
+        <input type="text" id="rootPath" placeholder="images">
+      </div>
+      <div class="field">
+        <label>子目录（collection = 分类名）</label>
+        <select id="collection">
+          <option value="auto">自动（按平台/画板名）</option>
+          <option value="pinterest">固定：pinterest</option>
+          <option value="huaban">固定：huaban</option>
+          <option value="doubao">固定：doubao</option>
+          <option value="jimeng">固定：jimeng</option>
+        </select>
+        <div class="tip">「自动」时 Pinterest/花瓣 会按画板名、豆包/即梦按平台名建子目录。</div>
+      </div>
+      <div class="field">
+        <label>复制链接类型</label>
+        <select id="cdn">
+          <option value="jsdelivr">jsDelivr CDN（推荐，国内可访问）</option>
+          <option value="raw">GitHub raw 直链</option>
+        </select>
+      </div>
+      <div class="check">
+        <input type="checkbox" id="writeManifest">
+        <label for="writeManifest">每次推送后写入 manifest-时间戳.json 索引文件</label>
+      </div>
+      <div class="actions">
+        <button class="btn-save" id="save">保存设置</button>
+        <button class="btn-test" id="test">测试连接</button>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>本地下载</h2>
+      <div class="field">
+        <label>下载目录（浏览器下载文件夹下的子目录）</label>
+        <input type="text" id="downloadFolder" placeholder="图片收集">
+      </div>
+      <div class="check">
+        <input type="checkbox" id="showFabEverywhere">
+        <label for="showFabEverywhere">在所有网页显示 📷 采集悬浮按钮（像无印豆包那样，点按钮即可收集当前页图片）</label>
+      </div>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
